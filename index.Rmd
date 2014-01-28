@@ -8,9 +8,6 @@ highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
-github      :
-  user      : saluteyang
-  repo      : slidifyDemo
 ---
 
 ## Agenda
@@ -180,46 +177,59 @@ p_seg_hist+facet_grid(peaktype~.,scale='free_x')
 
 ## Automated time-series forecast
 
-```{r echo=F, results='asis', message=F,warning=FALSE,cache=TRUE}
+```{r echo=F, message=F,warning=FALSE,cache=TRUE}
 require(forecast)
-test<-price.Seg[price.Seg$Date==2012,]$Price
-test.train<-test[1:600]
-test.rest<-test[601:length(test)]
-test.train<-ts(test.train,start=1,deltat=1)
-fcast.test<-dshw(test.train, period1=24,period2=24*7)
-require(rCharts)
-a1<-test
-a2=c(test.train,fcast.test$mean[1:144])
+test12<-price.Seg[price.Seg$Date==2012,]$Price
+test12.train<-test12[1:600]
+test12.rest<-test12[601:length(test12)]
+test12.train<-ts(test12.train,start=1,deltat=1)
+fcast.test12<-dshw(test12.train, period1=24,period2=24*7)
+```
+
+```{r echo=F, message=FALSE,warning=FALSE,results='asis'}
+library(googleVis)
+op <- options(gvis.plot.tag = "chart")
+a1<-test12
+a2=c(test12.train,fcast.test12$mean[1:144])
 temp12<-seq(as.POSIXct("2012-08-01 01:00:00"), as.POSIXct("2012-09-01 00:00:00"), by="hour")
 temp12.dat<-cbind.data.frame(temp12,a1,a2)
 names(temp12.dat)<-c('Date','Actual','Forecast')
-temp12.dat2<-transform(temp12.dat,Date=as.character(Date))
-m2 <- mPlot(x = 'Date', y = c('Actual','Forecast'), type = 'Line',
-            data = temp12.dat2, ymax=120, lineColors=c('#1E90FF','#000000'))
-m2$set(pointSize = 0, lineWidth = 2)
-m2
+m2 <- gvisLineChart(temp12.dat,xvar = 'Date', yvar = c('Forecast','Actual'),
+                    options=list(
+                      title="DSHW Forecast for August 2012",
+                      series="[{color:'blue'},
+                              {color: 'black'}]",
+                      hAxis="{textPosition:'out'}",
+                      width=900, height=550))
+plot(m2)
 ```
 
 ---
 
 ## Automated time-series forecast
 
-```{r echo=F,results='asis',message=F,warning=FALSE,cache=TRUE}
-test<-price.Seg[price.Seg$Date==2013,]$Price
-test.train<-test[1:600]
-test.rest<-test[601:length(test)]
-test.train<-ts(test.train,start=1,deltat=1)
-fcast.test<-dshw(test.train, period1=24,period2=24*7)
-a1<-test
-a2=c(test.train,fcast.test$mean[1:144])
+```{r echo=F, message=F,warning=FALSE,cache=TRUE}
+test13<-price.Seg[price.Seg$Date==2013,]$Price
+test13.train<-test13[1:600]
+test13.rest<-test13[601:length(test13)]
+test13.train<-ts(test13.train,start=1,deltat=1)
+fcast.test13<-dshw(test13.train, period1=24,period2=24*7)
+```
+
+```{r echo=F, results='asis'}
+a3<-test13
+a4=c(test13.train,fcast.test13$mean[1:144])
 temp13<-seq(as.POSIXct("2013-08-01 01:00:00"), as.POSIXct("2013-09-01 00:00:00"), by="hour")
-temp13.dat<-cbind.data.frame(temp13,a1,a2)
+temp13.dat<-cbind.data.frame(temp13,a3,a4)
 names(temp13.dat)<-c('Date','Actual','Forecast')
-temp13.dat2<-transform(temp13.dat,Date=as.character(Date))
-m3 <- mPlot(x = 'Date', y = c('Actual','Forecast'), type = 'Line',
-            data = temp13.dat2, ymax=80, lineColors=c('#1E90FF','#000000'))
-m3$set(pointSize = 0, lineWidth = 2)
-m3
+m3 <- gvisLineChart(temp13.dat,xvar = 'Date', yvar = c('Forecast','Actual'),
+                    options=list(
+                      title="DSHW Forecast for August 2013",
+                      series="[{color:'blue'},
+                              {color: 'black'}]",
+                      hAxis="{textPosition:'out'}",
+                      width=900, height=550))
+plot(m3)
 ```
 
 ---
@@ -228,10 +238,7 @@ m3
 
 Here is a neat way of visualizing 10 paths of random walk. This is realized in R using the googleVis package.
 ```{r, message=FALSE,echo=FALSE}
-library(googleVis)
-op <- options(gvis.plot.tag='chart')
 require(reshape2)
-require(googleVis)
 s_0=10
 mu=0.05/250
 sigma=0.2/sqrt(250)
@@ -251,8 +258,9 @@ colnames(x_chart)<-c("time","idx","path","price")
 ```{r, results='asis',echo=F}
 BB.motion<-gvisMotionChart(x_chart,idvar="path",timevar="time",
                     xvar="time",yvar="price",options = list(width = 600, height = 450))
-plot(BB.motion,"chart")
+plot(BB.motion)
 ## Set options back to original options
 options(op)
 ```
+
 ---

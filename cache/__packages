@@ -1,6 +1,7 @@
 base
 forecast
 ggplot2
+googleVis
 knitr
 lubridate
 rCharts
