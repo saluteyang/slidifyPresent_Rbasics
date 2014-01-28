@@ -62,7 +62,7 @@ With three simple lines of code, we
 
 ## Data visualization done right
 
-Let's look at another example using historical forward data for Henry Hub natural gas for August 2013 delivery. Trade dates of each month were colored differently, a local regression line is produced as well as it's error bands.
+Let's look at another example using historical forward data for Henry Hub natural gas for August 2013 delivery. Trade dates of each month are colored differently, a local regression line is produced as well as it's error bands.
 
 <img src="figure/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;" />
 
@@ -87,8 +87,8 @@ s2 + geom_point() + geom_smooth() + theme(legend.position = "none")
 
 > * We do need to mention some R-related programming knowledge such as the following
     * How to subset data
-    * How to use month and year in the lubridate package to extract information from the dates
-    * How to convert dates stored as factors to dates stored as dates and back
+    * How to use `month()` and `year()` functions in the lubridate package to extract information from dates
+    * How to convert dates stored as `factors` to dates stored as `dates` and back
 
 ---
 
@@ -149,9 +149,9 @@ p_seg_hist + facet_grid(peaktype ~ ., scale = "free_x")
 > * Contributed by Rob Hyndman of Monash University, Australia
 > * An excellent source of information on time series modeling using R is here: https://www.otexts.org/fpp/resources
 > * The package `forecast` enables complex methods to be invoked with just the right function call
-> * We'll see an example using a double-seasonality Holt-Winters procedure to forecast hourly power prices using the same source of information above
+> * We'll see an example using a double-seasonality Holt-Winters procedure to forecast hourly power prices using the same hourly PJM data
     * The double seasonality refers to both the daily cycle as well as the weekly (weekday/weekend) cycle
-> * The example uses a training set of 600 hourly data; the forecast (blue) is compared to the true out of sample data of hour number 601 to 744 plotted in black
+> * The example uses a training set of 600 hourly data; the forecast (blue) is compared to the actual out-of-sample data of hour number 601 to 744 (plotted in black)
 
 ---
 
@@ -169,14 +169,14 @@ Here is a neat way of visualizing 10 paths of random walk. This is realized in R
 
 
 <!-- MotionChart generated in R 3.0.2 by googleVis 0.4.7 package -->
-<!-- Tue Jan 28 10:00:08 2014 -->
+<!-- Tue Jan 28 10:11:40 2014 -->
 
 
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataMotionChartID15e458a61a19 () {
+function gvisDataMotionChartID2e1840df1316 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -3190,14 +3190,14 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartMotionChartID15e458a61a19() {
-var data = gvisDataMotionChartID15e458a61a19();
+function drawChartMotionChartID2e1840df1316() {
+var data = gvisDataMotionChartID2e1840df1316();
 var options = {};
-options["width"] =    500;
-options["height"] =    350;
+options["width"] =    600;
+options["height"] =    450;
 
     var chart = new google.visualization.MotionChart(
-    document.getElementById('MotionChartID15e458a61a19')
+    document.getElementById('MotionChartID2e1840df1316')
     );
     chart.draw(data,options);
     
@@ -3221,9 +3221,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartMotionChartID15e458a61a19);
+callbacks.push(drawChartMotionChartID2e1840df1316);
 })();
-function displayChartMotionChartID15e458a61a19() {
+function displayChartMotionChartID2e1840df1316() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -3247,12 +3247,12 @@ callbacks.shift()();
 </script>
  
 <!-- jsChart -->  
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartMotionChartID15e458a61a19"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartMotionChartID2e1840df1316"></script>
  
 <!-- divChart -->
   
-<div id="MotionChartID15e458a61a19"
-  style="width: 500px; height: 350px;">
+<div id="MotionChartID2e1840df1316"
+  style="width: 600px; height: 450px;">
 </div>
 
 ---

@@ -67,7 +67,7 @@ With three simple lines of code, we
 
 ## Data visualization done right
 
-Let's look at another example using historical forward data for Henry Hub natural gas for August 2013 delivery. Trade dates of each month were colored differently, a local regression line is produced as well as it's error bands.
+Let's look at another example using historical forward data for Henry Hub natural gas for August 2013 delivery. Trade dates of each month are colored differently, a local regression line is produced as well as it's error bands.
 
 ```{r echo=F,fig.align='center',fig.width=7,fig.height=5,results='asis',message=F,cache=TRUE}
 require(xlsx)
@@ -97,8 +97,8 @@ s2+geom_point()+geom_smooth()+theme(legend.position="none")
 
 > * We do need to mention some R-related programming knowledge such as the following
     * How to subset data
-    * How to use month and year in the lubridate package to extract information from the dates
-    * How to convert dates stored as factors to dates stored as dates and back
+    * How to use `month()` and `year()` functions in the lubridate package to extract information from dates
+    * How to convert dates stored as `factors` to dates stored as `dates` and back
 
 ---
 
@@ -172,9 +172,9 @@ p_seg_hist+facet_grid(peaktype~.,scale='free_x')
 > * Contributed by Rob Hyndman of Monash University, Australia
 > * An excellent source of information on time series modeling using R is here: https://www.otexts.org/fpp/resources
 > * The package `forecast` enables complex methods to be invoked with just the right function call
-> * We'll see an example using a double-seasonality Holt-Winters procedure to forecast hourly power prices using the same source of information above
+> * We'll see an example using a double-seasonality Holt-Winters procedure to forecast hourly power prices using the same hourly PJM data
     * The double seasonality refers to both the daily cycle as well as the weekly (weekday/weekend) cycle
-> * The example uses a training set of 600 hourly data; the forecast (blue) is compared to the true out of sample data of hour number 601 to 744 plotted in black
+> * The example uses a training set of 600 hourly data; the forecast (blue) is compared to the actual out-of-sample data of hour number 601 to 744 (plotted in black)
 
 ---
 
@@ -227,7 +227,7 @@ colnames(x_chart)<-c("time","idx","path","price")
 
 ```{r, results='asis',echo=F}
 BB.motion<-gvisMotionChart(x_chart,idvar="path",timevar="time",
-                    xvar="time",yvar="price",options = list(width = 500, height = 350))
+                    xvar="time",yvar="price",options = list(width = 600, height = 450))
 plot(BB.motion,"chart")
 ## Set options back to original options
 options(op)

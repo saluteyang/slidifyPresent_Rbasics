@@ -124,7 +124,7 @@ p + facet_grid(Date ~ .) + geom_smooth()
     <h2>Data visualization done right</h2>
   </hgroup>
   <article data-timings="">
-    <p>Let&#39;s look at another example using historical forward data for Henry Hub natural gas for August 2013 delivery. Trade dates of each month were colored differently, a local regression line is produced as well as it&#39;s error bands.</p>
+    <p>Let&#39;s look at another example using historical forward data for Henry Hub natural gas for August 2013 delivery. Trade dates of each month are colored differently, a local regression line is produced as well as it&#39;s error bands.</p>
 
 <p><img src="figure/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;" /></p>
 
@@ -153,8 +153,8 @@ s2 + geom_point() + geom_smooth() + theme(legend.position = &quot;none&quot;)
 
 <ul>
 <li>How to subset data</li>
-<li>How to use month and year in the lubridate package to extract information from the dates</li>
-<li>How to convert dates stored as factors to dates stored as dates and back</li>
+<li>How to use <code>month()</code> and <code>year()</code> functions in the lubridate package to extract information from dates</li>
+<li>How to convert dates stored as <code>factors</code> to dates stored as <code>dates</code> and back</li>
 </ul></li>
 </ul>
 
@@ -231,12 +231,12 @@ p_seg_hist + facet_grid(peaktype ~ ., scale = &quot;free_x&quot;)
 <li>Contributed by Rob Hyndman of Monash University, Australia</li>
 <li>An excellent source of information on time series modeling using R is here: <a href="https://www.otexts.org/fpp/resources">https://www.otexts.org/fpp/resources</a></li>
 <li>The package <code>forecast</code> enables complex methods to be invoked with just the right function call</li>
-<li>We&#39;ll see an example using a double-seasonality Holt-Winters procedure to forecast hourly power prices using the same source of information above
+<li>We&#39;ll see an example using a double-seasonality Holt-Winters procedure to forecast hourly power prices using the same hourly PJM data
 
 <ul>
 <li>The double seasonality refers to both the daily cycle as well as the weekly (weekday/weekend) cycle</li>
 </ul></li>
-<li>The example uses a training set of 600 hourly data; the forecast (blue) is compared to the true out of sample data of hour number 601 to 744 plotted in black</li>
+<li>The example uses a training set of 600 hourly data; the forecast (blue) is compared to the actual out-of-sample data of hour number 601 to 744 (plotted in black)</li>
 </ul>
 
   </article>
@@ -263,14 +263,14 @@ p_seg_hist + facet_grid(peaktype ~ ., scale = &quot;free_x&quot;)
 
 <!-- MotionChart generated in R 3.0.2 by googleVis 0.4.7 package -->
 
-<!-- Tue Jan 28 10:00:08 2014 -->
+<!-- Tue Jan 28 10:11:40 2014 -->
 
 <!-- jsHeader -->
 
 <script type="text/javascript">
  
 // jsData 
-function gvisDataMotionChartID15e458a61a19 () {
+function gvisDataMotionChartID2e1840df1316 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -3284,14 +3284,14 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartMotionChartID15e458a61a19() {
-var data = gvisDataMotionChartID15e458a61a19();
+function drawChartMotionChartID2e1840df1316() {
+var data = gvisDataMotionChartID2e1840df1316();
 var options = {};
-options["width"] =    500;
-options["height"] =    350;
+options["width"] =    600;
+options["height"] =    450;
 
     var chart = new google.visualization.MotionChart(
-    document.getElementById('MotionChartID15e458a61a19')
+    document.getElementById('MotionChartID2e1840df1316')
     );
     chart.draw(data,options);
     
@@ -3315,9 +3315,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartMotionChartID15e458a61a19);
+callbacks.push(drawChartMotionChartID2e1840df1316);
 })();
-function displayChartMotionChartID15e458a61a19() {
+function displayChartMotionChartID2e1840df1316() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -3343,13 +3343,13 @@ callbacks.shift()();
 
 <!-- jsChart -->  
 
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartMotionChartID15e458a61a19"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartMotionChartID2e1840df1316"></script>
  
 
 <!-- divChart -->
 
-<div id="MotionChartID15e458a61a19"
-  style="width: 500px; height: 350px;">
+<div id="MotionChartID2e1840df1316"
+  style="width: 600px; height: 450px;">
 </div>
 
   </article>
