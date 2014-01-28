@@ -225,25 +225,10 @@ x_chart<-cbind.data.frame(idx.Time,new_x)
 colnames(x_chart)<-c("time","idx","path","price")
 ```
 
-```{r motionchart, results='asis',echo=F}
+```{r, results='asis',echo=F}
 BB.motion<-gvisMotionChart(x_chart,idvar="path",timevar="time",
                     xvar="time",yvar="price",options = list(width = 500, height = 350))
 plot(BB.motion,"chart")
-```
-
-```{r ComboExample, results='asis',tidy=TRUE,echo=FALSE}
-## Add the mean
-CityPopularity$Mean=mean(CityPopularity$Popularity)
-CC <- gvisComboChart(CityPopularity, xvar='City',
-yvar=c('Mean', 'Popularity'),
-options=list(seriesType='bars',
-width=450, height=300,
-title='City Popularity',
-series='{0: {type:\"line\"}}'))
-plot(CC)
-```
-
-```{r resetOptions,echo=FALSE}
 ## Set options back to original options
 options(op)
 ```
