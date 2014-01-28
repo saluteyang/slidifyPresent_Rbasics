@@ -1,0 +1,250 @@
+---
+title       : Brief Introduction to R
+subtitle    : Why you should learn this "language"?
+author      : David Yang
+job         : R Enthusiast
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+github      :
+  user      : saluteyang
+  repo      : slidifyDemo
+---
+
+## Agenda
+
+1. Introduce some basic concepts of the statistical computing language
+2. Introduce two packages that are powerful and popular
+3. Point to further uses of R with a fun example
+
+---
+
+## This is easier than you think:
+
+> 1. R is a high level language that skips over most programming niceties
+> 2. R has a big support community and more packages than you have time to explore
+> 3. Anything you want to achieve, someone probably has done it in R, and done it beautifully
+
+---
+
+## Let's start with `ggplot2`
+
+> * Contributed by Hadley Wickham of Rice University
+> * Some data to start us off
+> * Historical price-load relationship during August based on hourly PJM data
+```{r echo=F, fig.width=5, fig.height=5,results='asis',message=F,cache=T}
+require(xlsx)
+require(ggplot2)
+priceload<-read.csv("C:\\Users\\Yangster\\Dropbox\\Private\\3AugHrlyLdPrice_PJM.csv")
+p<-ggplot(priceload,aes(x=E_W_LD,y=Price))+ geom_point()+xlab("Load")+
+  ylab("Price")
+p+facet_grid(Date~.)
+p+facet_grid(Date~.)+geom_smooth()
+```
+---
+
+## What happened
+
+```{r echo=T, eval=F}
+require(xlsx)
+require(ggplot2)
+priceload<-read.csv("C:\\Users\\Yangster\\Dropbox\\Private\\3AugHrlyLdPrice_PJM.csv")
+p<-ggplot(priceload,aes(x=E_W_LD,y=Price))+ geom_point()+xlab("Load")+
+  ylab("Price")
+p+facet_grid(Date~.)
+p+facet_grid(Date~.)+geom_smooth()
+```
+
+With three simple lines of code, we
+* Imported data from an Excel file
+* Created elegant charts using `ggplot2`'s graphics language
+  * using aesthetics (aes) to create mapping of data to graphic elements
+  * using geometry (geom) to specify the way we want to present the data including sophisticated "faceting" and non-parametric regression
+
+---
+
+## Data visualization done right
+
+Let's look at another example using historical forward data for Henry Hub natural gas for August 2013 delivery. Trade dates of each month were colored differently, a local regression line is produced as well as it's error bands.
+
+```{r echo=F,fig.align='center',fig.width=7,fig.height=5,results='asis',message=F,cache=TRUE}
+require(xlsx)
+require(lubridate)
+require(ggplot2)
+futNGDel= read.xlsx("C:\\Users\\Yangster\\Dropbox\\Private\\FUTURE_NG_Del.xlsx",2,header=TRUE)
+s2<-ggplot(data=subset(futNGDel,subset=year(DelMo)==2013 & 
+                        month(DelMo)==8 & TradeDate>as.Date('4/1/2013','%m/%d/%Y')),
+          aes(x=TradeDate,y=Price,colour=as.factor(month(TradeDate))))
+s2+geom_point()+geom_smooth()+theme(legend.position="none")
+```
+
+---
+
+## Some programming asides
+
+```{r echo=T, eval=F}
+require(xlsx)
+require(lubridate)
+require(ggplot2)
+futNGDel= read.xlsx("C:\\Users\\Yangster\\Dropbox\\Private\\FUTURE_NG_Del.xlsx",2,header=TRUE)
+s2<-ggplot(data=subset(futNGDel,subset=year(DelMo)==2013 & 
+                        month(DelMo)==8 & TradeDate>as.Date('4/1/2013','%m/%d/%Y')),
+          aes(x=TradeDate,y=Price,colour=as.factor(month(TradeDate))))
+s2+geom_point()+geom_smooth()+theme(legend.position="none")
+```
+
+> * We do need to mention some R-related programming knowledge such as the following
+    * How to subset data
+    * How to use month and year in the lubridate package to extract information from the dates
+    * How to convert dates stored as factors to dates stored as dates and back
+
+---
+
+## A lot more cool stuff awaits
+
+Once we are more familiar with R, we can do a lot by typing relatively little. What's more important is probably the dynamic and reproducible nature of it.
+
+Any guesses what the code below will do?
+
+```{r echo=T, eval=F}
+require(xlsx)
+require(lubridate)
+require(ggplot2)
+# Importing and processing of data
+price.Seg= read.csv("C:\\Users\\Yangster\\Dropbox\\Private\\3AugHrlyLdPrice_PJM_2.csv",header=TRUE)
+price.Seg$Date_Long<-as.Date(price.Seg$Date_Long,"%m/%d/%Y")
+price.Seg<-price.Seg[,c('Date_Long','Date','Price','SegType')]
+aggreg.Seg<-aggregate(price.Seg,list(price.Seg$SegType,price.Seg$Date_Long),mean)
+aggreg.Seg<-aggreg.Seg[,c(1,2,4,5)]
+names(aggreg.Seg)<-c('peaktype','date','year','price')
+```
+
+---
+
+## (continued from above)
+
+```{r echo=T, eval=F}
+aggreg.Seg<-aggreg.Seg[order(aggreg.Seg$peaktype,aggreg.Seg$date),]
+aggreg.Seg$peaktype<-factor(aggreg.Seg$peaktype,levels=c('OnPeak','OffPeak',"Wknd"))
+# Setting up plotting
+p_seg<-ggplot(aggreg.Seg,aes(x=date,y=price,colour=factor(year)))+
+  geom_point()+xlab("Date")+ylab("Price")
+p_seg+facet_grid(peaktype~year,scale='free_x')+
+  theme(axis.text.x = element_text(angle = 90, vjust=0.5))
+p_seg_hist<-ggplot(aggreg.Seg,aes(x=price,fill=factor(year),colour=factor(year),..density..))+
+  geom_density(alpha=0.5,position="identity")
+p_seg_hist+facet_grid(peaktype~.,scale='free_x')
+```
+
+---
+
+## Side-by-side comparison of August power prices by segment and year
+
+```{r echo=F,fig.width=6.5,fig.height=6.5,results='asis',message=F,warning=FALSE,cache=TRUE}
+require(xlsx)
+require(lubridate)
+require(ggplot2)
+# Importing and processing of data
+price.Seg= read.csv("C:\\Users\\Yangster\\Dropbox\\Private\\3AugHrlyLdPrice_PJM_2.csv",header=TRUE)
+price.Seg$Date_Long<-as.Date(price.Seg$Date_Long,"%m/%d/%Y")
+price.Seg<-price.Seg[,c('Date_Long','Date','Price','SegType')]
+aggreg.Seg<-aggregate(price.Seg,list(price.Seg$SegType,price.Seg$Date_Long),mean)
+aggreg.Seg<-aggreg.Seg[,c(1,2,4,5)]
+names(aggreg.Seg)<-c('peaktype','date','year','price')
+aggreg.Seg<-aggreg.Seg[order(aggreg.Seg$peaktype,aggreg.Seg$date),]
+aggreg.Seg$peaktype<-factor(aggreg.Seg$peaktype,levels=c('OnPeak','OffPeak',"Wknd"))
+# Setting up plotting
+p_seg<-ggplot(aggreg.Seg,aes(x=date,y=price,colour=factor(year)))+
+  geom_point()+xlab("Date")+ylab("Price")
+p_seg+facet_grid(peaktype~year,scale='free_x')+
+  theme(axis.text.x = element_text(angle = 90, vjust=0.5))
+p_seg_hist<-ggplot(aggreg.Seg,aes(x=price,fill=factor(year),colour=factor(year),..density..))+
+  geom_density(alpha=0.5,position="identity")
+p_seg_hist+facet_grid(peaktype~.,scale='free_x')
+```
+
+---
+
+## Now let's look at `forecast`
+
+> * Contributed by Rob Hyndman of Monash University, Australia
+> * An excellent source of information on time series modeling using R is here: https://www.otexts.org/fpp/resources
+> * The package `forecast` enables complex methods to be invoked with just the right function call
+> * We'll see an example using a double-seasonality Holt-Winters procedure to forecast hourly power prices using the same source of information above
+    * The double seasonality refers to both the daily cycle as well as the weekly (weekday/weekend) cycle
+> * The example uses a training set of 600 hourly data; the forecast (blue) is compared to the true out of sample data of hour number 601 to 744 plotted in black
+
+---
+
+## Automated time-series forecast
+
+```{r echo=F,fig.width=6.5,fig.height=6.5,results='asis',message=F,warning=FALSE,cache=TRUE}
+require(forecast)
+test<-price.Seg[price.Seg$Date==2012,]$Price
+test.train<-test[1:600]
+test.rest<-test[601:length(test)]
+test.train<-ts(test.train,start=1,deltat=1)
+fcast.test<-dshw(test.train, period1=24,period2=24*7)
+plot(fcast.test, main="DSHW forecast for 2012 August hourly prices")
+lines(test,col="black")
+
+test<-price.Seg[price.Seg$Date==2013,]$Price
+test.train<-test[1:600]
+test.rest<-test[601:length(test)]
+test.train<-ts(test.train,start=1,deltat=1)
+fcast.test<-dshw(test.train, period1=24,period2=24*7)
+plot(fcast.test,main="DSHW forecast for 2013 August hourly prices")
+lines(test,col="black")
+```
+
+---
+
+## Let's have some fun, finally
+
+Here is a neat way of visualizing 10 paths of random walk. This is realized in R using the googleVis package.
+```{r, message=FALSE,echo=FALSE}
+library(googleVis)
+op <- options(gvis.plot.tag='chart')
+require(reshape2)
+require(googleVis)
+s_0=10
+mu=0.05/250
+sigma=0.2/sqrt(250)
+set.seed(123)
+x=matrix(s_0,ncol=10,nrow=50) 
+for (t in 2: 50)                 
+  x[t,]=x[t-1,]+rnorm(10)*sigma+mu 
+colnames(x)<-paste('Path',seq(1,10,by=1),sep="_")
+new_x<-melt(x)
+# Note that cbind alone will convert Date objects, use the following syntax instead
+# Note also that cbind recycles the variable of shorter length
+idx.Time<-seq.Date(as.Date('2011-01-01'),le=50,by='1 day')
+x_chart<-cbind.data.frame(idx.Time,new_x)
+colnames(x_chart)<-c("time","idx","path","price")
+```
+
+```{r motionchart, results='asis',echo=F}
+BB.motion<-gvisMotionChart(x_chart,idvar="path",timevar="time",
+                    xvar="time",yvar="price",options = list(width = 500, height = 350))
+plot(BB.motion,"chart")
+```
+
+```{r ComboExample, results='asis',tidy=TRUE,echo=FALSE}
+## Add the mean
+CityPopularity$Mean=mean(CityPopularity$Popularity)
+CC <- gvisComboChart(CityPopularity, xvar='City',
+yvar=c('Mean', 'Popularity'),
+options=list(seriesType='bars',
+width=450, height=300,
+title='City Popularity',
+series='{0: {type:\"line\"}}'))
+plot(CC)
+```
+
+```{r resetOptions,echo=FALSE}
+## Set options back to original options
+options(op)
+```
+---

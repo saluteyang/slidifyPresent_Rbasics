@@ -1,0 +1,9 @@
+base
+forecast
+ggplot2
+knitr
+lubridate
+rJava
+xlsx
+xlsxjars
+zoo
