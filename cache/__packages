@@ -3,6 +3,8 @@ forecast
 ggplot2
 knitr
 lubridate
+rCharts
+reshape2
 rJava
 xlsx
 xlsxjars

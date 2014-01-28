@@ -157,7 +157,30 @@ p_seg_hist + facet_grid(peaktype ~ ., scale = "free_x")
 
 ## Automated time-series forecast
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-81.png) ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-82.png) 
+<iframe src='
+figure/unnamed-chunk-8.html
+' scrolling='no' seamless class='rChart 
+morris
+ '
+id=iframe-
+chart26b4724d7947
+></iframe>
+<style>iframe.rChart{ width: 100%; height: 400px;}</style>
+
+
+---
+
+## Automated time-series forecast
+
+<iframe src='
+figure/unnamed-chunk-9.html
+' scrolling='no' seamless class='rChart 
+morris
+ '
+id=iframe-
+chart2cdc4c833f65
+></iframe>
+<style>iframe.rChart{ width: 100%; height: 400px;}</style>
 
 
 ---
@@ -169,14 +192,14 @@ Here is a neat way of visualizing 10 paths of random walk. This is realized in R
 
 
 <!-- MotionChart generated in R 3.0.2 by googleVis 0.4.7 package -->
-<!-- Tue Jan 28 10:11:40 2014 -->
+<!-- Tue Jan 28 12:25:26 2014 -->
 
 
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataMotionChartID2e1840df1316 () {
+function gvisDataMotionChartID26b431cd42f8 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -3190,14 +3213,14 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartMotionChartID2e1840df1316() {
-var data = gvisDataMotionChartID2e1840df1316();
+function drawChartMotionChartID26b431cd42f8() {
+var data = gvisDataMotionChartID26b431cd42f8();
 var options = {};
 options["width"] =    600;
 options["height"] =    450;
 
     var chart = new google.visualization.MotionChart(
-    document.getElementById('MotionChartID2e1840df1316')
+    document.getElementById('MotionChartID26b431cd42f8')
     );
     chart.draw(data,options);
     
@@ -3221,9 +3244,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartMotionChartID2e1840df1316);
+callbacks.push(drawChartMotionChartID26b431cd42f8);
 })();
-function displayChartMotionChartID2e1840df1316() {
+function displayChartMotionChartID26b431cd42f8() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -3247,11 +3270,11 @@ callbacks.shift()();
 </script>
  
 <!-- jsChart -->  
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartMotionChartID2e1840df1316"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartMotionChartID26b431cd42f8"></script>
  
 <!-- divChart -->
   
-<div id="MotionChartID2e1840df1316"
+<div id="MotionChartID26b431cd42f8"
   style="width: 600px; height: 450px;">
 </div>
 

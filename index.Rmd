@@ -180,23 +180,46 @@ p_seg_hist+facet_grid(peaktype~.,scale='free_x')
 
 ## Automated time-series forecast
 
-```{r echo=F,fig.width=6.5,fig.height=6.5,results='asis',message=F,warning=FALSE,cache=TRUE}
+```{r echo=F, results='asis', message=F,warning=FALSE,cache=TRUE}
 require(forecast)
 test<-price.Seg[price.Seg$Date==2012,]$Price
 test.train<-test[1:600]
 test.rest<-test[601:length(test)]
 test.train<-ts(test.train,start=1,deltat=1)
 fcast.test<-dshw(test.train, period1=24,period2=24*7)
-plot(fcast.test, main="DSHW forecast for 2012 August hourly prices")
-lines(test,col="black")
+require(rCharts)
+a1<-test
+a2=c(test.train,fcast.test$mean[1:144])
+temp12<-seq(as.POSIXct("2012-08-01 01:00:00"), as.POSIXct("2012-09-01 00:00:00"), by="hour")
+temp12.dat<-cbind.data.frame(temp12,a1,a2)
+names(temp12.dat)<-c('Date','Actual','Forecast')
+temp12.dat2<-transform(temp12.dat,Date=as.character(Date))
+m2 <- mPlot(x = 'Date', y = c('Actual','Forecast'), type = 'Line',
+            data = temp12.dat2, ymax=120, lineColors=c('#1E90FF','#000000'))
+m2$set(pointSize = 0, lineWidth = 2)
+m2
+```
 
+---
+
+## Automated time-series forecast
+
+```{r echo=F,results='asis',message=F,warning=FALSE,cache=TRUE}
 test<-price.Seg[price.Seg$Date==2013,]$Price
 test.train<-test[1:600]
 test.rest<-test[601:length(test)]
 test.train<-ts(test.train,start=1,deltat=1)
 fcast.test<-dshw(test.train, period1=24,period2=24*7)
-plot(fcast.test,main="DSHW forecast for 2013 August hourly prices")
-lines(test,col="black")
+a1<-test
+a2=c(test.train,fcast.test$mean[1:144])
+temp13<-seq(as.POSIXct("2013-08-01 01:00:00"), as.POSIXct("2013-09-01 00:00:00"), by="hour")
+temp13.dat<-cbind.data.frame(temp13,a1,a2)
+names(temp13.dat)<-c('Date','Actual','Forecast')
+temp13.dat2<-transform(temp13.dat,Date=as.character(Date))
+m3 <- mPlot(x = 'Date', y = c('Actual','Forecast'), type = 'Line',
+            data = temp13.dat2, ymax=80, lineColors=c('#1E90FF','#000000'))
+m3$set(pointSize = 0, lineWidth = 2)
+m3
 ```
 
 ---
